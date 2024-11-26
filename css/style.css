@@ -1,0 +1,356 @@
+@import url('https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&display=swap');
+
+* {
+  box-sizing: border-box;
+  font-family: 'Kdam Thmor Pro', sans-serif;
+}
+
+body {
+  --diameter: 600px;
+  --background-color: #27282c;
+
+  min-height: 100vh;
+  min-width: 100vw;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--background-color);
+  top: 0;
+}
+
+#best-score-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+  color: white;
+  font-size: 30px;
+}
+
+#timer-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 30px;
+  color: white;
+  font-size: 30px;
+}
+
+#timer-content {
+  transition: 0.5s;
+}
+
+/* PIE */
+.pie {
+  --slice-border-def: .05;
+  --slice-border-wide: .2;
+  --slice-border: var(--slice-border-wide);
+  --slice-gap: .025;
+  --inner-gap: .1;
+  --score-diameter-def: 200px;
+  --score-diameter-wide: calc(var(--diameter) * (1 - var(--slice-border)));
+  --score-diameter: var(--score-diameter-wide);
+  --child-count: 4;
+
+
+  position: relative;
+  width: var(--diameter);
+  height: var(--diameter);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: var(--background-color);
+}
+
+.pie .slice:nth-child(4n + 1) {
+  --clr-border: #68a5f0;
+  --clr-fill: #b7d2f2;
+}
+
+.pie:not(.disabled) .slice:nth-child(4n + 1):hover:not(.hover) {
+  --clr-fill: #1270ea;
+}
+
+.pie .slice:nth-child(4n + 1).hover {
+  --clr-fill: #68a5f0;
+}
+
+.pie .slice:nth-child(4n + 2) {
+  --clr-border: #ffff44;
+  --clr-fill: #f9f9d3;
+}
+
+.pie:not(.disabled) .slice:nth-child(4n + 2):hover:not(.hover) {
+  --clr-fill: #b8b813;
+}
+
+.pie .slice:nth-child(4n + 2).hover {
+  --clr-fill: #ffff44;
+}
+
+.pie .slice:nth-child(4n + 3) {
+  --clr-border: #4dd74d;
+  --clr-fill: #b4f2b4;
+
+  /*filter: grayscale(90%);*/
+}
+
+.pie:not(.disabled) .slice:nth-child(4n + 3):hover:not(.hover) {
+  --clr-fill: #11a311;
+}
+
+.pie .slice:nth-child(4n + 3).hover {
+  --clr-fill: #4dd74d;
+}
+
+.pie .slice:nth-child(4n) {
+  --clr-border: #fc554d;
+  --clr-fill: #fec2bf;
+}
+
+.pie:not(.disabled) .slice:nth-child(4n):hover:not(.hover) {
+  --clr-fill: #bf211b;
+}
+
+.pie .slice:nth-child(4n).hover {
+  --clr-fill: #fc554d;
+}
+
+.pie.disabled a:not(.play, .fa-solid) {
+  pointer-events: none;
+  cursor: default;
+}
+
+.slice.border {
+  --local-diameter: var(--diameter);
+  --local-gap: var(--slice-gap);
+  --rotation: calc(360deg / var(--child-count) * var(--index) + 45deg);
+
+  transition: .75s, transform 0s;
+  transform: rotate(var(--rotation));
+  width: var(--local-diameter);
+  height: var(--local-diameter);
+  clip-path: polygon(
+    calc(var(--local-diameter) * (.5 + var(--local-gap))) calc(var(--local-diameter) * .50),
+    var(--local-diameter) calc(var(--local-diameter) * (0 + var(--local-gap))),
+    var(--local-diameter) calc(var(--local-diameter) * (1 - var(--local-gap))));
+  border-radius: 50%;
+  background-color: var(--clr-border);
+  position: absolute;
+}
+
+.slice.border.inner {
+  --local-diameter: calc(var(--score-diameter) + var(--diameter) * var(--slice-border));
+  --local-gap: var(--inner-gap);
+  position: absolute;
+  z-index: 1;
+}
+
+.pie.disabled .slice.border {
+  background-color: var(--clr-fill);
+}
+
+.slice.fill {
+  --rotation: calc(360deg / var(--child-count) * var(--index) + 45deg);
+  --factor: 1.25;
+  --local-diameter: calc(var(--diameter) * (1 - var(--slice-border) * var(--factor)));
+
+  width: calc((1 - var(--slice-border) * var(--factor)) * 100%);
+  height: calc((1 - var(--slice-border) * var(--factor)) * 100%);
+  border-radius: 50%;
+
+  position: absolute;
+  z-index: 1;
+  transition: .5s, background-color .5s, transform 0s;
+  transform: rotate(var(--rotation));
+  background-color: var(--clr-fill);
+
+  clip-path: polygon(
+    calc(var(--local-diameter) * (.5 + var(--slice-border) + var(--slice-gap))) calc(var(--local-diameter) * .50),
+    var(--local-diameter) calc(var(--local-diameter) * (0 + var(--slice-border) + var(--slice-gap))),
+    var(--local-diameter) calc(var(--local-diameter) * (1 - var(--slice-border) - var(--slice-gap))));
+
+}
+
+.score {
+  position: absolute;
+  z-index: 2;
+  border-radius: 50%;
+  color: white;
+  font-size: 30px;
+  user-select: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  background-color: var(--background-color);
+  width: var(--score-diameter);
+  height: var(--score-diameter);
+  transition: 0.5s;
+
+}
+
+.score .content {
+  transition: .5s;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  overflow: hidden;
+
+  width: 100%;
+  height: 50%;
+}
+
+.play {
+  text-decoration: none;
+  color: var(--background-color);
+  background-color: white;
+  padding: 2px 25px;
+  border-radius: 20px;
+}
+
+.fade-out {
+  font-size: 0;
+  opacity: 0;
+  pointer-events: none;
+  cursor: default;
+}
+
+.fade-in {
+  font-size: 30px;
+  opacity: 1;
+  pointer-events: all;
+  cursor: unset;
+}
+
+.options-container {
+  height: 50px;
+  align-items: center;
+  display: flex;
+}
+
+.options-title {
+  transition: 0.5s;
+  display: inline-block;
+  width: 145px;
+  text-align: center;
+  height: 100%;
+}
+
+.fade-out:not(.fade-in) .options-title {
+  width: 0;
+}
+
+.options {
+  transition: 0.5s;
+  overflow-x: hidden;
+  display: inline-block;
+  position: relative;
+  width: 160px;
+  height: 100%;
+}
+
+.fade-out:not(.fade-in) .options {
+  width: 0;
+}
+
+.option {
+  transition: 0.5s;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+}
+
+.right {
+  transform: translateX(100%);
+}
+
+.shown {
+  transform: translateX(0);
+}
+
+.left {
+  transform: translateX(-100%);
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a.disabled {
+  color: #5d5d5d;
+  pointer-events: none;
+}
+
+/* BACKGROUND */
+.bubblesContainer {
+  z-index: -2;
+  display: flex;
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+  height: 100vh;
+  bottom: 0;
+}
+
+.bubbles {
+  position: absolute;
+  display: flex;
+  height: 100vh;
+  --secondary-clr: #444;
+  --speed: 350s;
+  transition: 0.5s;
+}
+
+
+.bubbles span {
+  top: -10vh;
+  position: relative;
+  width: 30px;
+  height: 30px;
+  filter: blur(15px) opacity(0.5);
+  background: var(--secondary-clr);
+  margin: 0 2px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 10px var(--secondary-clr);
+  transition: 0.5s;
+  animation-name: background_animation;
+  /* The higher value of --i, the higher will be the speed of the bubble */
+  animation-duration: calc(var(--speed) / var(--i));
+  /* Bubbles go faster when they are near the top of the screen.
+     It helps the screen feel balanced, since the bubbles are bigger when they are on top.
+     At the same time, the speed change is smooth and probably the user won't notice */
+  animation-timing-function: cubic-bezier(.3, 0, 1, .8);
+  animation-iteration-count: infinite;
+  /* I put the animation delay because either way all the bubbles start at the same time.
+     This way, faster bubbles start sooner so all the animation feels a bit more natural */
+  animation-delay: calc(30s / (var(--i) - 9) - 1s);
+}
+
+@keyframes background_animation {
+  from {
+    transform: translateY(110vh) scale(0.2);
+  }
+
+  to {
+    transform: translateY(-20vh) scale(1.2);
+  }
+}
+
+.bubblesShow {
+  --secondary-clr: #444;
+}

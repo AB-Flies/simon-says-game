@@ -1,0 +1,253 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <link rel="stylesheet" href="css/style.css">
+  <meta name="description" content="">
+
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+  <meta property="og:image:alt" content="">
+
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+<!-- MESSAGES -->
+<div id="best-score-container">
+  <div id="best-score">
+    <span id="best-score-content">Best score: 0</span>
+  </div>
+</div>
+
+<div id="timer-container">
+  <div id="timer">
+    <span id="timer-content" style="opacity: 0">Time: 40</span>
+  </div>
+</div>
+
+<!-- PIE -->
+<div class="pie">
+  <div class="slice border" style="--index: 0"></div>
+  <div class="slice border" style="--index: 1"></div>
+  <div class="slice border" style="--index: 2"></div>
+  <div class="slice border" style="--index: 3"></div>
+
+  <a class="slice fill" style="--index: 0" href="javascript:checkMove(0)"></a>
+  <a class="slice fill" style="--index: 1" href="javascript:checkMove(1)"></a>
+  <a class="slice fill" style="--index: 2" href="javascript:checkMove(2)"></a>
+  <a class="slice fill" style="--index: 3" href="javascript:checkMove(3)"></a>
+
+  <div class="slice border inner" style="--index: 0"></div>
+  <div class="slice border inner" style="--index: 1"></div>
+  <div class="slice border inner" style="--index: 2"></div>
+  <div class="slice border inner" style="--index: 3"></div>
+
+  <div class="score">
+    <div class="content fade-out fade-in">
+      <span class="options-container">
+        <span class="options-title"> Timer: </span>
+        <a class="disabled prev-button" href="javascript:prevOption(0)"><i class="fa-solid fa-caret-left"></i></a>
+        <span class="options">
+          <span class="option right shown">None</span>
+          <span class="option right">40s</span>
+          <span class="option right">20s</span>
+          <span class="option right">10s</span>
+          <span class="option right">5s</span>
+        </span>
+        <a class="next-button" href="javascript:nextOption(0)"><i class="fa-solid fa-caret-right"></i></a>
+      </span>
+      <span class="options-container">
+        <span class="options-title"> Steps: </span>
+        <a class="prev-button" href="javascript:prevOption(1)"><i class="fa-solid fa-caret-left"></i></a>
+        <span class="options">
+          <span class="option right shown">1</span>
+          <span class="option right">2</span>
+          <span class="option right">3</span>
+          <span class="option right">4</span>
+          <span class="option right">5</span>
+        </span>
+        <a class="next-button" href="javascript:nextOption(1)"><i class="fa-solid fa-caret-right"></i></a>
+      </span>
+      <span class="options-container">
+        <span class="options-title"> Difficulty: </span>
+        <a class="prev-button" href="javascript:prevOption(2)"><i class="fa-solid fa-caret-left"></i></a>
+        <span class="options">
+          <span class="option right shown left">Easy</span>
+          <span class="option right shown">Normal</span>
+          <span class="option right">Hard</span>
+          <span class="option right">Insane</span>
+          <span class="option right">Impossible</span>
+        </span>
+        <a class="next-button" href="javascript:nextOption(2)"><i class="fa-solid fa-caret-right"></i></a>
+      </span>
+      <span style="color:rgba(0,0,0,0)">_</span>
+      <a class="play" href="javascript:play()">Play</a>
+    </div>
+    <div class="content fade-out">
+      <span id="score-content"></span>
+    </div>
+  </div>
+</div>
+
+<!-- BACKGROUND -->
+<div class="bubblesContainer">
+  <div class="bubbles">
+    <span style="--i:38.7"></span>
+    <span style="--i:31.8"></span>
+    <span style="--i:12"></span>
+    <span style="--i:30.3"></span>
+    <span style="--i:10"></span>
+    <span style="--i:26.2"></span>
+    <span style="--i:22.3"></span>
+    <span style="--i:29.7"></span>
+    <span style="--i:15.5"></span>
+    <span style="--i:20.5"></span>
+    <span style="--i:14.7"></span>
+    <span style="--i:12"></span>
+    <span style="--i:37.7"></span>
+    <span style="--i:21.5"></span>
+    <span style="--i:38.5"></span>
+    <span style="--i:28.5"></span>
+    <span style="--i:13.2"></span>
+    <span style="--i:31.5"></span>
+    <span style="--i:11.2"></span>
+    <span style="--i:12.7"></span>
+    <span style="--i:27.6"></span>
+    <span style="--i:25.7"></span>
+    <span style="--i:29.5"></span>
+    <span style="--i:29.3"></span>
+    <span style="--i:24.2"></span>
+    <span style="--i:24.6"></span>
+    <span style="--i:38.9"></span>
+    <span style="--i:28.7"></span>
+    <span style="--i:35.7"></span>
+    <span style="--i:10.3"></span>
+    <span style="--i:24.7"></span>
+    <span style="--i:36.6"></span>
+    <span style="--i:29.3"></span>
+    <span style="--i:24"></span>
+    <span style="--i:16.2"></span>
+    <span style="--i:15.8"></span>
+    <span style="--i:14.9"></span>
+    <span style="--i:35.8"></span>
+    <span style="--i:28"></span>
+    <span style="--i:23.3"></span>
+    <span style="--i:14.2"></span>
+    <span style="--i:31.5"></span>
+    <span style="--i:13.8"></span>
+    <span style="--i:38.3"></span>
+    <span style="--i:15.1"></span>
+    <span style="--i:24.1"></span>
+    <span style="--i:32.3"></span>
+    <span style="--i:13.7"></span>
+    <span style="--i:21.5"></span>
+    <span style="--i:12.8"></span>
+    <span style="--i:38.3"></span>
+    <span style="--i:32.5"></span>
+    <span style="--i:29.2"></span>
+    <span style="--i:17.4"></span>
+    <span style="--i:35.2"></span>
+    <span style="--i:27"></span>
+    <span style="--i:28"></span>
+    <span style="--i:29.8"></span>
+    <span style="--i:30.3"></span>
+    <span style="--i:38.5"></span>
+    <span style="--i:24.9"></span>
+    <span style="--i:10.6"></span>
+    <span style="--i:32.1"></span>
+    <span style="--i:38.1"></span>
+    <span style="--i:23.7"></span>
+    <span style="--i:27.7"></span>
+    <span style="--i:26.6"></span>
+    <span style="--i:21.8"></span>
+    <span style="--i:36.4"></span>
+    <span style="--i:19.5"></span>
+  </div>
+</div>
+<div class="bubblesContainer">
+  <div class="bubbles">
+    <span style="--i:38.2"></span>
+    <span style="--i:28.7"></span>
+    <span style="--i:37"></span>
+    <span style="--i:19.2"></span>
+    <span style="--i:39.1"></span>
+    <span style="--i:10.4"></span>
+    <span style="--i:34.6"></span>
+    <span style="--i:24"></span>
+    <span style="--i:11"></span>
+    <span style="--i:27.9"></span>
+    <span style="--i:14.9"></span>
+    <span style="--i:23.9"></span>
+    <span style="--i:29.1"></span>
+    <span style="--i:18.6"></span>
+    <span style="--i:38.9"></span>
+    <span style="--i:37.6"></span>
+    <span style="--i:21.6"></span>
+    <span style="--i:15"></span>
+    <span style="--i:12.1"></span>
+    <span style="--i:24.7"></span>
+    <span style="--i:17.2"></span>
+    <span style="--i:29"></span>
+    <span style="--i:16.2"></span>
+    <span style="--i:26.4"></span>
+    <span style="--i:21.8"></span>
+    <span style="--i:18.1"></span>
+    <span style="--i:39.8"></span>
+    <span style="--i:13.2"></span>
+    <span style="--i:31.8"></span>
+    <span style="--i:11.1"></span>
+    <span style="--i:25.2"></span>
+    <span style="--i:36"></span>
+    <span style="--i:26"></span>
+    <span style="--i:24"></span>
+    <span style="--i:34"></span>
+    <span style="--i:28.5"></span>
+    <span style="--i:17.5"></span>
+    <span style="--i:35.8"></span>
+    <span style="--i:27.4"></span>
+    <span style="--i:14.3"></span>
+    <span style="--i:13.6"></span>
+    <span style="--i:14.4"></span>
+    <span style="--i:31.1"></span>
+    <span style="--i:38.9"></span>
+    <span style="--i:20.7"></span>
+    <span style="--i:27.9"></span>
+    <span style="--i:24.6"></span>
+    <span style="--i:31.8"></span>
+    <span style="--i:34.9"></span>
+    <span style="--i:15.8"></span>
+    <span style="--i:20.7"></span>
+    <span style="--i:27.5"></span>
+    <span style="--i:33"></span>
+    <span style="--i:39.1"></span>
+    <span style="--i:39.2"></span>
+    <span style="--i:35.3"></span>
+    <span style="--i:27.6"></span>
+    <span style="--i:22.1"></span>
+    <span style="--i:38.3"></span>
+    <span style="--i:19.4"></span>
+    <span style="--i:18.8"></span>
+    <span style="--i:15.1"></span>
+    <span style="--i:16.3"></span>
+    <span style="--i:24.5"></span>
+    <span style="--i:15.3"></span>
+    <span style="--i:36.5"></span>
+    <span style="--i:33.6"></span>
+    <span style="--i:14.5"></span>
+    <span style="--i:37.2"></span>
+    <span style="--i:11.3"></span>
+  </div>
+</div>
+</body>
+<script src="dist/app.js"></script>
+<script src="https://kit.fontawesome.com/ee33fe316c.js" crossorigin="anonymous"></script>
+</html>
