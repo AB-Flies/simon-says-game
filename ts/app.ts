@@ -169,7 +169,7 @@ async function returnToMenu() {
 
   document.getElementsByClassName('content')[0].classList.add('fade-in');
   document.getElementsByClassName('content')[1].classList.remove('fade-in');
-  await delay(500);
+  delay(500).then(() => document.querySelector('.pie')?.classList.remove('disabled'));
 }
 
 async function lose() {
@@ -182,6 +182,7 @@ async function lose() {
   // let scoreElement = document.querySelector('.score') as HTMLElement;
   scoreContent.style.color = '#ff6961';
   scoreContent.innerHTML = `You lost! <br>Score: ${score}`;
+  score = 0;
   animateBackground(true)
   // scoreElement.style.backgroundColor = '#fec2bf';
   // scoreElement.style.opacity = '.85';
@@ -202,6 +203,7 @@ function checkMove(move: number) {
   }
 
   if (move !== streak[0]) {
+    document.querySelector('.pie')?.classList.add('disabled');
     if (score > bestScore) {
       bestScore = score;
       let bestScoreContent = document.getElementById('best-score-content') as HTMLElement;
@@ -211,7 +213,6 @@ function checkMove(move: number) {
         delay(1250).then(() => bestScoreContent.style.color = 'white');
       })
     }
-    score = 0;
     lose().catch(console.error);
     return;
   }
