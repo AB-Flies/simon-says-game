@@ -30,7 +30,7 @@ function delay(ms: number) {
 }
 
 (() => {
-  let timerId = setInterval(() => {
+  setInterval(() => {
     if (pauseTimer || !timer || timer < 0) {
       return;
     }
@@ -179,7 +179,7 @@ async function lose() {
     timerContent.textContent = `Timer: ${timer}s`;
   }
   let scoreContent = document.getElementById('score-content') as HTMLElement;
-  let scoreElement = document.querySelector('.score') as HTMLElement;
+  // let scoreElement = document.querySelector('.score') as HTMLElement;
   scoreContent.style.color = '#ff6961';
   scoreContent.innerHTML = `You lost! <br>Score: ${score}`;
   animateBackground(true)
@@ -228,3 +228,27 @@ function checkMove(move: number) {
     delay(250).then(() => document.getElementsByClassName('fill')[move].classList.remove('hover'));
   }
 }
+
+(window as any).addMoves = addMoves;
+(window as any).addRandomMove = addRandomMove;
+(window as any).animateBackground = animateBackground;
+(window as any).animateBubbleContainer = animateBubbleContainer;
+(window as any).bestScore = bestScore;
+(window as any).checkMove = checkMove;
+(window as any).delay = delay;
+(window as any).getSteps = getSteps;
+(window as any).getTimeBetweenMoves = getTimeBetweenMoves;
+(window as any).getTimeToMove = getTimeToMove;
+(window as any).lose = lose;
+(window as any).nextOption = nextOption;
+(window as any).pauseTimer = pauseTimer;
+(window as any).play = play;
+(window as any).prevOption = prevOption;
+(window as any).returnToMenu = returnToMenu;
+(window as any).score = score;
+(window as any).selected = selected;
+(window as any).simonMoves = simonMoves;
+(window as any).simonSays = simonSays;
+(window as any).streak = streak;
+(window as any).timer = timer;
+(window as any).timerContent = timerContent;
